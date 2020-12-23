@@ -1,7 +1,5 @@
 # Jarkom_Modul5_Praktikum_A05
 
-## SOAL SHIFT MODUL 5
-
 ### (A) Tugas pertama kalian yaitu membuat topologi jaringan sesuai dengan rancangan yang diberikan Bibah seperti dibawah ini :
 
 Keterangan : SURABAYA diberikan IP TUNTAP
