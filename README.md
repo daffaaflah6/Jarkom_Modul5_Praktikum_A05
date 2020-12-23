@@ -119,9 +119,9 @@ ip route add 192.168.0.8/29 via 192.168.0.6 #PROBO&MADIUN via KEDIRI
 - Restart network dengan mengetikkan `service networking restart` pada setiap UML
 - Kemudian cek perubahan dengan menjalankan perintah `ifconfig`
 - Lalu pada router `SURABAYA` jalankan `iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE –s 192.168.0.0/16` agar UML dapat mengakses internet
-- Selanjutnya tes di setiap UML dengan menjalankan perintah `ping its.ac.id`
+- Selanjutnya tes di setiap UML dengan menjalankan perintah `ping google.com`
 
-
+![ping-google](https://user-images.githubusercontent.com/52326074/102999752-35643700-455c-11eb-88f0-6201720b092d.jpg)
 
 ### (D) Tugas berikutnya adalah memberikan ip pada subnet SIDOARJO dan GRESIK secara dinamis menggunakan bantuan DHCP SERVER (Selain subnet tersebut menggunakan ip static). 
 Kemudian kalian mengingat bahwa kalian harus setting DHCP RELAY pada router yang menghubungkannya, seperti yang kalian telah pelajari di masa lalu.
