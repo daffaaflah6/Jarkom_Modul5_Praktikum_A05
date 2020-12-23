@@ -1,0 +1,290 @@
+---------------------------------------------
+A. TOPOLOGI
+---------------------------------------------
+# Switch
+uml_switch -unix switch0 > /dev/null < /dev/null & #A01
+uml_switch -unix switch1 > /dev/null < /dev/null & #A02
+uml_switch -unix switch2 > /dev/null < /dev/null & #A03
+uml_switch -unix switch3 > /dev/null < /dev/null & #A04
+uml_switch -unix switch4 > /dev/null < /dev/null & #A05
+uml_switch -unix switch5 > /dev/null < /dev/null & #A06
+
+# Router
+xterm -T SURABAYA -e linux ubd0=SURABAYA,jarkom umid=SURABAYA eth0=tuntap,,,10.151.72.25 eth1=daemon,,,switch0 eth2=daemon,,,switch3 mem=96M &
+xterm -T BATU -e linux ubd0=BATU,jarkom umid=BATU eth0=daemon,,,switch3 eth1=daemon,,,switch2 eth2=daemon,,,switch5 mem=96M &
+xterm -T KEDIRI -e linux ubd0=KEDIRI,jarkom umid=KEDIRI eth0=daemon,,,switch0 eth1=daemon,,,switch1 eth2=daemon,,,switch4 mem=96M &
+
+# Server
+xterm -T PROBOLINGGO -e linux ubd0=PROBOLINGGO,jarkom umid=PROBOLINGGO eth0=daemon,,,switch1 mem=128M &
+xterm -T MADIUN -e linux ubd0=MADIUN,jarkom umid=MADIUN eth0=daemon,,,switch1 mem=128M &
+xterm -T MALANG -e linux ubd0=MALANG,jarkom umid=MALANG eth0=daemon,,,switch2 mem=128M &
+xterm -T MOJOKERTO -e linux ubd0=MOJOKERTO,jarkom umid=MOJOKERTO eth0=daemon,,,switch2 mem=128M &
+
+# Klien 1
+xterm -T GRESIK -e linux ubd0=GRESIK,jarkom umid=GRESIK eth0=daemon,,,switch4 mem=96M &
+xterm -T SIDOARJO -e linux ubd0=SIDOARJO,jarkom umid=SIDOARJO eth0=daemon,,,switch5 mem=96M &
+
+HALT -> bye.sh
+uml_mconsole SURABAYA halt
+uml_mconsole MALANG halt
+uml_mconsole MOJOKERTO halt
+uml_mconsole SIDOARJO halt
+uml_mconsole GRESIK halt
+uml_mconsole BATU halt
+uml_mconsole KEDIRI halt
+uml_mconsole PROBOLINGGO halt
+uml_mconsole MADIUN halt
+
+---------------------------------------------
+B. VLSM
+---------------------------------------------
+10.151.73.48   255.255.255.248	/29 MALANG&MOJOKERTO-BATU ada 3
+192.168.1.0    255.255.255.0	/24 BATU-SIDOARJO perlu 211
+192.168.0.0    255.255.255.252  /30 SURABAYA-BATU perlu 2
+192.168.0.4    255.255.255.252  /30 SURABAYA-KEDIRI perlu 2
+192.168.2.0    255.255.255.0	/24 KEDIRI-GRESIK perlu 201
+192.168.0.8    255.255.255.248	/29 PROBOLINGGO&MADIUN-KEDIRI perlu 3
+total 419 -> /22
+
+---------------------------------------------
+C. ROUTING
+---------------------------------------------
+nano route.sh
+ip route add 10.151.73.48/29 via 192.168.0.2 #MALANG&MOJO via BATU
+ip route add 192.168.1.0/24 via 192.168.0.2 #SIDOARJO via BATU
+ip route add 192.168.2.0/24 via 192.168.0.6 #GRESIK via KEDIRI
+ip route add 192.168.0.8/29 via 192.168.0.6 #PROBO&MADIUN via KEDIRI
+
+bash route.sh
+
+SURABAYA, BATU, KEDIRI
+nano /etc/sysctl.conf
+	uncomment net.ipv4.ip_forward=1
+sysctl -p
+
+SURABAYA
+nano /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0 
+iface eth0 inet static
+address 10.151.72.26
+netmask 255.255.255.252
+gateway 10.151.72.25
+
+auto eth1
+iface eth1 inet static
+address 192.168.0.5
+netmask 255.255.255.252
+
+auto eth2
+iface eth2 inet static
+address 192.168.0.1
+netmask 255.255.255.252
+#switch0 - KEDIRI
+#switch3 - BATU
+
+service networking restart
+ifconfig
+
+BATU
+nano /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address 192.168.0.2
+netmask 255.255.255.252
+gateway 192.168.0.1
+
+auto eth1
+iface eth1 inet static
+address 10.151.73.49
+netmask 255.255.255.248
+
+auto eth2
+iface eth2 inet static
+address 192.168.1.1
+netmask 255.255.255.0
+#SURABAYA, MALANG&MOJOKERTO, SIDOARJO
+
+service networking restart
+ifconfig
+
+KEDIRI
+nano /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address 192.168.0.6
+netmask 255.255.255.252
+gateway 192.168.0.5
+
+auto eth1
+iface eth1 inet static
+address 192.168.0.9
+netmask 255.255.255.248
+
+auto eth2
+iface eth2 inet static
+address 192.168.2.1
+netmask 255.255.255.0
+#SURABAYA, PROBOLINGGO&MADIUN, GRESIK
+
+service networking restart
+ifconfig
+
+PROBOLINGGO
+nano /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address 192.168.0.10
+netmask 255.255.255.248
+gateway 192.168.0.9
+#KEDIRI
+
+service networking restart
+ifconfig
+
+MADIUN
+nano /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address 192.168.0.11
+netmask 255.255.255.248
+gateway 192.168.0.9
+#KEDIRI
+
+service networking restart
+ifconfig
+
+MALANG
+nano /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address 10.151.73.50
+netmask 255.255.255.248
+gateway 10.151.73.49
+#BATU
+
+service networking restart
+ifconfig
+
+MOJOKERTO
+nano /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address 10.151.73.51
+netmask 255.255.255.248
+gateway 10.151.73.49
+#BATU
+
+service networking restart
+ifconfig
+
+GRESIK
+nano /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address 192.168.2.2
+netmask 255.255.255.0
+gateway 192.168.2.1
+#KEDIRI
+
+service networking restart
+ifconfig
+
+SIDOARJO
+nano /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+address 192.168.1.2
+netmask 255.255.255.0
+gateway 192.168.1.1
+#BATU
+
+service networking restart
+ifconfig
+
+SURABAYA
+iptables –t nat –A POSTROUTING –o eth0 –j MASQUERADE –s 192.168.0.0/16
+
+ping google.com
+
+---------------------------------------------
+D. DHCP SERVER & RELAY
+---------------------------------------------
+Semua UML
+nano /etc/apt/sources.list
+deb http://boyo.its.ac.id/debian stretch main contrib non-free
+
+apt-get update
+
+MOJOKERTO
+apt-get install isc-dhcp-server
+nano /etc/default/isc-dhcp-server
+	INTERFACES="eth0"
+
+nano /etc/dhcp/dhcpd.conf
+subnet 10.151.73.48 netmask 255.255.255.248 {
+	option routers 10.151.73.48;
+	option broadcast-address 10.151.73.55;
+    }
+
+subnet 192.168.1.0 netmask 255.255.255.0 {
+	range 192.168.1.2 192.168.1.213;
+	option routers 192.168.1.1;
+	option broadcast-address 192.168.1.255;
+	option domain-name-servers 10.151.73.50;
+	option domain-name-servers 202.46.129.2;
+	default-lease-time 600;
+	max-lease-time 7200;
+}
+
+subnet 192.168.2.0 netmask 255.255.255.0 {
+    range 192.168.2.2 192.168.2.203;
+    option routers 192.168.2.1;
+    option broadcast-address 192.168.2.255;
+    option domain-name-servers 10.151.73.50;
+    option domain-name-servers 202.46.129.2;
+    default-lease-time 600;
+    max-lease-time 7200;
+}
+
+service isc-dhcp-server restart
+
+SEMUA ROUTER
+apt-get install isc-dhcp-relay
+nano /etc/default/isc-dhcp-relay
+	SERVERS="10.151.73.51"
+service isc-dhcp-relay restart
+
+SIDOARJO, GRESIK
+nano /etc/network/interfaces
+auto eth0
+iface eth0 inet dhcp
+service networking restart
+
+---------------------------------------------
