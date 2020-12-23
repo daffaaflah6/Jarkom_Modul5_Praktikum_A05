@@ -2,6 +2,8 @@
 
 ### (A) Tugas pertama kalian yaitu membuat topologi jaringan sesuai dengan rancangan yang diberikan Bibah seperti dibawah ini :
 
+![Screen Shot 2020-12-23 at 15 38 37](https://user-images.githubusercontent.com/56763600/102973091-2454ff00-4537-11eb-9f3d-36d6c02c06bf.png)
+
 Keterangan : SURABAYA diberikan IP TUNTAP
 
 ```
