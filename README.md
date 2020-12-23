@@ -16,8 +16,15 @@ Jumlah host pada subnet SIDOARJO 200 Host
 Jumlah host pada subnet GRESIK 210 Host
 ```
 
-### (B) karena kalian telah mempelajari Subnetting dan Routing, Bibah meminta kalian untuk membuat topologi tersebut menggunakan teknik CIDR atau VLSM. Setelah melakukan subnetting, 
+### (B) karena kalian telah mempelajari Subnetting dan Routing, Bibah meminta kalian untuk membuat topologi tersebut menggunakan teknik CIDR atau VLSM. 
 
+![Screen Shot 2020-12-23 at 16 03 27](https://user-images.githubusercontent.com/56763600/102973911-91b55f80-4538-11eb-9540-267d9bd23846.png)
+
+![Screen Shot 2020-12-23 at 16 03 33](https://user-images.githubusercontent.com/56763600/102973916-94b05000-4538-11eb-9189-19f8546e3ba3.png)
+
+![tuntap (2)](https://user-images.githubusercontent.com/56763600/102973893-895d2480-4538-11eb-8101-682470d6f01a.png)
+
+Setelah melakukan subnetting, 
 ### (C) kalian juga diharuskan melakukan routing agar setiap perangkat pada jaringan tersebut dapat terhubung.
 
 ### (D) Tugas berikutnya adalah memberikan ip pada subnet SIDOARJO dan GRESIK secara dinamis menggunakan bantuan DHCP SERVER (Selain subnet tersebut menggunakan ip static). 
