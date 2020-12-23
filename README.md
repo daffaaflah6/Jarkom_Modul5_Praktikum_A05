@@ -3,6 +3,7 @@
 - 05111840000030 MUHAMMMAD DAFFA’ AFLAH SYARIF
 - 05111840000163 PUTU PUTRI NATIH DEVAYANTI
 
+# SOAL + PEMBAHASAN
 ### (A) Tugas pertama kalian yaitu membuat topologi jaringan sesuai dengan rancangan yang diberikan Bibah seperti dibawah ini :
 
 ![Screen Shot 2020-12-23 at 15 38 37](https://user-images.githubusercontent.com/56763600/102973091-2454ff00-4537-11eb-9f3d-36d6c02c06bf.png)
@@ -208,3 +209,5 @@ Karena kita memiliki 2 buah WEB Server,
 ### (6) Bibah ingin SURABAYA disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada PROBOLINGGO port 80 dan MADIUN port 80.
 
 ### (7) Bibah ingin agar semua paket didrop oleh firewall (dalam topologi) tercatat dalam log pada setiap UML yang memiliki aturan drop.
+
+# TERIMA KASIH :)
