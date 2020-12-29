@@ -214,14 +214,43 @@ iface eth0 inet dhcp
 
 ### (1) Agar topologi yang kalian buat dapat mengakses keluar, kalian diminta untuk mengkonfigurasi SURABAYA menggunakan iptables, namun Bibah tidak ingin kalian menggunakan MASQUERADE.
 
+![1-sh](https://user-images.githubusercontent.com/52326074/103270122-ec900080-49e9-11eb-97af-0816a78bb8f1.jpg)
+
+![1-1-testing](https://user-images.githubusercontent.com/52326074/103270176-f6b1ff00-49e9-11eb-9979-fde1bb3d135d.jpg)
+
+![1-2-testing](https://user-images.githubusercontent.com/52326074/103270179-f74a9580-49e9-11eb-9716-8d2dfba6ba57.png)
+
+![1-3-testing](https://user-images.githubusercontent.com/52326074/103270116-eb5ed380-49e9-11eb-85c8-6c1dd1424bab.jpg)
+
 ### (2) Kalian diminta untuk mendrop semua akses SSH dari luar Topologi (UML) Kalian pada server yang memiliki ip DMZ (DHCP dan DNS SERVER) pada SURABAYA demi menjaga keamanan.
+
+![2-sh](https://user-images.githubusercontent.com/52326074/103270125-ed289700-49e9-11eb-9bf0-5596ce776b1a.png)
+
+![2-1-sh](https://user-images.githubusercontent.com/52326074/103270128-ed289700-49e9-11eb-9b84-837848418357.png)
+
+![2-testing](https://user-images.githubusercontent.com/52326074/103270170-f580d200-49e9-11eb-9dc7-6c2bfb330ce7.jpg)
 
 ### (3) Karena tim kalian maksimal terdiri dari 3 orang, Bibah meminta kalian untuk membatasi DHCP dan DNS server hanya boleh menerima maksimal 3 koneksi ICMP secara bersamaan yang berasal dari mana saja menggunakan iptables pada masing masing server, selebihnya akan di DROP.
 
+![3-sh-mlgmojo](https://user-images.githubusercontent.com/52326074/103270134-ee59c400-49e9-11eb-96bd-8f479e2555f3.png)
+
+![3-1-sh](https://user-images.githubusercontent.com/52326074/103270136-eef25a80-49e9-11eb-9cd1-21f3796dda57.jpg)
+
+![3-2-sh](https://user-images.githubusercontent.com/52326074/103270140-ef8af100-49e9-11eb-96fd-b07a803c241c.jpg)
+
+![3-testing](https://user-images.githubusercontent.com/52326074/103270159-f285e180-49e9-11eb-8376-bca216609d47.png)
+
 kemudian kalian diminta untuk membatasi akses ke MALANG yang berasal dari SUBNET SIDOARJO dan SUBNET GRESIK dengan peraturan sebagai berikut:
 ### ● (4) Akses dari subnet SIDOARJO hanya diperbolehkan pada pukul 07.00 - 17.00 pada hari Senin sampai Jumat.
+
+![4-sh](https://user-images.githubusercontent.com/52326074/103270142-ef8af100-49e9-11eb-9a19-27f7ba10efc4.jpg)
+
+![4-testing](https://user-images.githubusercontent.com/52326074/103270145-f0238780-49e9-11eb-98af-6b21d6c4b9ce.jpg)
+
 ### ● (5) Akses dari subnet GRESIK hanya diperbolehkan pada pukul 17.00 hingga pukul 07.00 setiap harinya.
 Selain itu paket akan di REJECT.
+
+![5-testing](https://user-images.githubusercontent.com/52326074/103270154-f1ed4b00-49e9-11eb-9444-f972813961d7.jpg)
 
 Karena kita memiliki 2 buah WEB Server, 
 ### (6) Bibah ingin SURABAYA disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada PROBOLINGGO port 80 dan MADIUN port 80.
