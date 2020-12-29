@@ -217,14 +217,14 @@ iface eth0 inet dhcp
 
 ### (1) Agar topologi yang kalian buat dapat mengakses keluar, kalian diminta untuk mengkonfigurasi SURABAYA menggunakan iptables, namun Bibah tidak ingin kalian menggunakan MASQUERADE.
 
-- nano soal1.sh di UML SURABAYA
+- Lakukan perintah `nano soal1.sh` di UML SURABAYA
 ```
 iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 10.151.72.26
 ```
 
 ![1-sh](https://user-images.githubusercontent.com/52326074/103270122-ec900080-49e9-11eb-97af-0816a78bb8f1.jpg)
 
-- bash soal1.sh kemudian ping pada client dan server
+- Lakukan perintah `bash soal1.sh` kemudian ping pada UML lainnya. 
 
 ![1-1-testing](https://user-images.githubusercontent.com/52326074/103270176-f6b1ff00-49e9-11eb-9979-fde1bb3d135d.jpg)
 
@@ -232,26 +232,28 @@ iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 10.151.72.26
 
 ![1-3-testing](https://user-images.githubusercontent.com/52326074/103270116-eb5ed380-49e9-11eb-85c8-6c1dd1424bab.jpg)
 
+- Berhasil diakses!
+
 ### (2) Kalian diminta untuk mendrop semua akses SSH dari luar Topologi (UML) Kalian pada server yang memiliki ip DMZ (DHCP dan DNS SERVER) pada SURABAYA demi menjaga keamanan.
 
-- nano soal2.sh di UML SURABAYA
+- Lakukan perintah `nano soal2.sh` di UML SURABAYA
 ```
 iptables -A FORWARD -p tcp --dport 22 -d 10.151.73.48/29 -i eth0 -j DROP
 ```
 
 ![2-sh](https://user-images.githubusercontent.com/52326074/103270125-ed289700-49e9-11eb-9bf0-5596ce776b1a.png)
 
-- `bash soal2.sh`
+- Lakukan perintah `bash soal2.sh`
 
 ![Screen Shot 2020-12-29 at 20 16 42](https://user-images.githubusercontent.com/56763600/103283317-35a87a80-4a13-11eb-9c0d-dd7db5f3da45.png)
 
-- install netcat pada UML MALANG
+- install netcat pada UML MALANG dengan perintah `apt-get install netcat`
 
-- `nc -l -p 22` pada UML MALANG kemudian `nc 10.151.73.50 22` pada putty, ketikkan apapun
+- Lakukan perintah `nc -l -p 22` pada UML MALANG kemudian `nc 10.151.73.50 22` pada putty, ketikkan kata-kata apapun
 
 ![2-testing](https://user-images.githubusercontent.com/52326074/103270170-f580d200-49e9-11eb-9dc7-6c2bfb330ce7.jpg)
 
-- pesan di UML malang tidak tertampilkan
+- Pesan di UML MALANG tidak tertampilkan
 
 ### (3) Karena tim kalian maksimal terdiri dari 3 orang, Bibah meminta kalian untuk membatasi DHCP dan DNS server hanya boleh menerima maksimal 3 koneksi ICMP secara bersamaan yang berasal dari mana saja menggunakan iptables pada masing masing server, selebihnya akan di DROP.
 
@@ -275,7 +277,7 @@ iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j
 kemudian kalian diminta untuk membatasi akses ke MALANG yang berasal dari SUBNET SIDOARJO dan SUBNET GRESIK dengan peraturan sebagai berikut:
 ### ● (4) Akses dari subnet SIDOARJO hanya diperbolehkan pada pukul 07.00 - 17.00 pada hari Senin sampai Jumat.
 
-- `nano soal4.sh` di UML MALANG
+- Lakukan perintah `nano soal4.sh` di UML MALANG
 ```
 iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 07:00 --timestop 17:00 --weekdays Mon,Tue,Wed,Thu,Fri -j ACCEPT
 iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 17:01 --timestop 06:59 -j REJECT
@@ -284,7 +286,7 @@ iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 07:00 --timestop 17:00 -
 
 ![4-sh](https://user-images.githubusercontent.com/52326074/103270142-ef8af100-49e9-11eb-9a19-27f7ba10efc4.jpg)
 
-- `bash soal4.sh` pada UML MALANG
+- Lakukan perintah `bash soal4.sh` pada UML MALANG
 
 - jalankan `date -s '2020-12-29 20:00:00'`
 
@@ -307,6 +309,7 @@ iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 07:01 --timestop 16:59 -
 ```
 
 - `bash soal5.sh` pada UML MALANG
+
 - jalankan `date -s '2020-12-29 20:00:00'`
 
 - kemudian `ping 10.151.73.50` pada UML GRESIK untuk melakukan testing.
@@ -360,7 +363,7 @@ iptables -A LOGGING -j DROP
 
 ![messageImage_1609206393916](https://user-images.githubusercontent.com/56763600/103282153-c7ae8400-4a0f-11eb-8916-7fbbd7025e60.jpg)
 
-- Lakukan `bash soal7.sh` 
+- Lakukan perintah `bash soal7.sh` 
 
 - Mengacu pada soal 2
 ![no 7](https://user-images.githubusercontent.com/56763600/103282188-ee6cba80-4a0f-11eb-9050-183839918947.png)
