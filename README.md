@@ -214,7 +214,14 @@ iface eth0 inet dhcp
 
 ### (1) Agar topologi yang kalian buat dapat mengakses keluar, kalian diminta untuk mengkonfigurasi SURABAYA menggunakan iptables, namun Bibah tidak ingin kalian menggunakan MASQUERADE.
 
+- nano soal1.sh di UML SURABAYA
+```
+iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 10.151.72.26
+```
+
 ![1-sh](https://user-images.githubusercontent.com/52326074/103270122-ec900080-49e9-11eb-97af-0816a78bb8f1.jpg)
+
+- bash soal1.sh kemudian ping pada client dan server
 
 ![1-1-testing](https://user-images.githubusercontent.com/52326074/103270176-f6b1ff00-49e9-11eb-9979-fde1bb3d135d.jpg)
 
@@ -224,31 +231,70 @@ iface eth0 inet dhcp
 
 ### (2) Kalian diminta untuk mendrop semua akses SSH dari luar Topologi (UML) Kalian pada server yang memiliki ip DMZ (DHCP dan DNS SERVER) pada SURABAYA demi menjaga keamanan.
 
+- nano soal2.sh di UML SURABAYA
+```
+iptables -A FORWARD -p tcp --dport 22 -d 10.151.73.48/29 -i eth0 -j DROP
+```
+
 ![2-sh](https://user-images.githubusercontent.com/52326074/103270125-ed289700-49e9-11eb-9bf0-5596ce776b1a.png)
 
+- bash soal2.sh kemudian `nc 10.151.73.50 22` pada UML SURABAYA
+
 ![2-1-sh](https://user-images.githubusercontent.com/52326074/103270128-ed289700-49e9-11eb-9b84-837848418357.png)
+
+- install netcat pada UML MALANG
+- `nc -l -p 22` pada UML MALANG
 
 ![2-testing](https://user-images.githubusercontent.com/52326074/103270170-f580d200-49e9-11eb-9dc7-6c2bfb330ce7.jpg)
 
 ### (3) Karena tim kalian maksimal terdiri dari 3 orang, Bibah meminta kalian untuk membatasi DHCP dan DNS server hanya boleh menerima maksimal 3 koneksi ICMP secara bersamaan yang berasal dari mana saja menggunakan iptables pada masing masing server, selebihnya akan di DROP.
 
+- nano soal3.sh di UML MALANG & MOJOKERTO
+```
+iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
+```
+
 ![3-sh-mlgmojo](https://user-images.githubusercontent.com/52326074/103270134-ee59c400-49e9-11eb-96bd-8f479e2555f3.png)
+
+- bash soal3.sh pada UML MALANG & MOJOKERTO
 
 ![3-1-sh](https://user-images.githubusercontent.com/52326074/103270136-eef25a80-49e9-11eb-9cd1-21f3796dda57.jpg)
 
 ![3-2-sh](https://user-images.githubusercontent.com/52326074/103270140-ef8af100-49e9-11eb-96fd-b07a803c241c.jpg)
+
+- kemudian `ping 10.15.73.50`
 
 ![3-testing](https://user-images.githubusercontent.com/52326074/103270159-f285e180-49e9-11eb-8376-bca216609d47.png)
 
 kemudian kalian diminta untuk membatasi akses ke MALANG yang berasal dari SUBNET SIDOARJO dan SUBNET GRESIK dengan peraturan sebagai berikut:
 ### ● (4) Akses dari subnet SIDOARJO hanya diperbolehkan pada pukul 07.00 - 17.00 pada hari Senin sampai Jumat.
 
+- nano soal4.sh di UML MALANG
+```
+iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 07:00 --timestop 17:00 --weekdays Mon,Tue,Wed,Thu,Fri -j ACCEPT
+iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 17:01 --timestop 06:59 -j REJECT
+iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 07:00 --timestop 17:00 --weekdays Sat,Sun -j REJECT
+```
+
 ![4-sh](https://user-images.githubusercontent.com/52326074/103270142-ef8af100-49e9-11eb-9a19-27f7ba10efc4.jpg)
+
+- bash soal4.sh pada UML MALANG
+- jalankan `date -s '2020-12-29 20:00:00'`
+- kemudian `ping 10.15.73.50` pada UML SIDOARJO
 
 ![4-testing](https://user-images.githubusercontent.com/52326074/103270145-f0238780-49e9-11eb-98af-6b21d6c4b9ce.jpg)
 
 ### ● (5) Akses dari subnet GRESIK hanya diperbolehkan pada pukul 17.00 hingga pukul 07.00 setiap harinya.
 Selain itu paket akan di REJECT.
+
+- nano soal5.sh pada UML MALANG
+```
+iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 07:01 --timestop 16:59 -j REJECT
+```
+
+- bash soal5.sh pada UML MALANG
+- jalankan `date -s '2020-12-29 20:00:00'`
+- kemudian `ping 10.15.73.50` pada UML GRESIK
 
 ![5-testing](https://user-images.githubusercontent.com/52326074/103270154-f1ed4b00-49e9-11eb-9444-f972813961d7.jpg)
 
