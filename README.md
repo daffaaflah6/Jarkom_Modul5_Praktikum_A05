@@ -217,14 +217,14 @@ iface eth0 inet dhcp
 
 ### (1) Agar topologi yang kalian buat dapat mengakses keluar, kalian diminta untuk mengkonfigurasi SURABAYA menggunakan iptables, namun Bibah tidak ingin kalian menggunakan MASQUERADE.
 
-- Lakukan perintah `nano soal1.sh` di UML SURABAYA
+- Lakukan perintah `nano soal1.sh` di UML SURABAYA yang berisikan
 ```
 iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 10.151.72.26
 ```
 
 ![1-sh](https://user-images.githubusercontent.com/52326074/103270122-ec900080-49e9-11eb-97af-0816a78bb8f1.jpg)
 
-- Lakukan perintah `bash soal1.sh` kemudian ping pada UML lainnya. 
+- Lakukan perintah `bash soal1.sh` kemudian testing dengan melakukan ping keluar pada UML lainnya. 
 
 ![1-1-testing](https://user-images.githubusercontent.com/52326074/103270176-f6b1ff00-49e9-11eb-9979-fde1bb3d135d.jpg)
 
@@ -236,7 +236,7 @@ iptables -t nat -A POSTROUTING -o eth0 -j SNAT --to 10.151.72.26
 
 ### (2) Kalian diminta untuk mendrop semua akses SSH dari luar Topologi (UML) Kalian pada server yang memiliki ip DMZ (DHCP dan DNS SERVER) pada SURABAYA demi menjaga keamanan.
 
-- Lakukan perintah `nano soal2.sh` di UML SURABAYA
+- Lakukan perintah `nano soal2.sh` di UML SURABAYA yang berisikan
 ```
 iptables -A FORWARD -p tcp --dport 22 -d 10.151.73.48/29 -i eth0 -j DROP
 ```
@@ -257,14 +257,14 @@ iptables -A FORWARD -p tcp --dport 22 -d 10.151.73.48/29 -i eth0 -j DROP
 
 ### (3) Karena tim kalian maksimal terdiri dari 3 orang, Bibah meminta kalian untuk membatasi DHCP dan DNS server hanya boleh menerima maksimal 3 koneksi ICMP secara bersamaan yang berasal dari mana saja menggunakan iptables pada masing masing server, selebihnya akan di DROP.
 
-- `nano soal3.sh` di UML MALANG & MOJOKERTO
+- Lakukan perintah `nano soal3.sh` di UML MALANG & MOJOKERTO yang berisikan
 ```
 iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
 ```
 
 ![3-sh-mlgmojo](https://user-images.githubusercontent.com/52326074/103270134-ee59c400-49e9-11eb-96bd-8f479e2555f3.png)
 
-- `bash soal3.sh` pada UML MALANG & MOJOKERTO
+- Lakukan perintah `bash soal3.sh` pada UML MALANG & MOJOKERTO
 
 ![3-1-sh](https://user-images.githubusercontent.com/52326074/103270136-eef25a80-49e9-11eb-9cd1-21f3796dda57.jpg)
 
@@ -277,7 +277,7 @@ iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j
 kemudian kalian diminta untuk membatasi akses ke MALANG yang berasal dari SUBNET SIDOARJO dan SUBNET GRESIK dengan peraturan sebagai berikut:
 ### ● (4) Akses dari subnet SIDOARJO hanya diperbolehkan pada pukul 07.00 - 17.00 pada hari Senin sampai Jumat.
 
-- Lakukan perintah `nano soal4.sh` di UML MALANG
+- Lakukan perintah `nano soal4.sh` di UML MALANG yang berisikan
 ```
 iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 07:00 --timestop 17:00 --weekdays Mon,Tue,Wed,Thu,Fri -j ACCEPT
 iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 17:01 --timestop 06:59 -j REJECT
@@ -303,7 +303,7 @@ iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 07:00 --timestop 17:00 -
 ### ● (5) Akses dari subnet GRESIK hanya diperbolehkan pada pukul 17.00 hingga pukul 07.00 setiap harinya.
 Selain itu paket akan di REJECT.
 
-- `nano soal5.sh` pada UML MALANG
+- `nano soal5.sh` pada UML MALANG yang berisikan
 ```
 iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 07:01 --timestop 16:59 -j REJECT
 ```
