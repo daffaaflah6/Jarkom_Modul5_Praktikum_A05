@@ -286,13 +286,13 @@ iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 07:00 --timestop 17:00 -
 
 - `bash soal4.sh` pada UML MALANG
 
-- jalankan `date -s '2020-12-29 20:00:00`
+- jalankan `date -s '2020-12-29 20:00:00'`
 
 - kemudian `ping 10.15.73.50` pada UML SIDOARJO
 
 ![4-testing](https://user-images.githubusercontent.com/52326074/103270145-f0238780-49e9-11eb-98af-6b21d6c4b9ce.jpg)
 
-- Untuk testing yang kedua, jalankan `date -s '2020-12-29 09:00:00`
+- Untuk testing yang kedua, jalankan `date -s '2020-12-29 09:00:00'`
 
 - kemudian `ping 10.15.73.50` pada UML SIDOARJO
 
@@ -307,7 +307,7 @@ iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 07:01 --timestop 16:59 -
 ```
 
 - `bash soal5.sh` pada UML MALANG
-- jalankan `date -s '2020-12-29 20:00:00' 
+- jalankan `date -s '2020-12-29 20:00:00'`
 
 - kemudian `ping 10.151.73.50` pada UML GRESIK untuk melakukan testing.
 
@@ -315,7 +315,7 @@ iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 07:01 --timestop 16:59 -
 
 - maka terlihat bahwa UML dapat diakses
 
-- testing selanjutnya jalankan `date -s '2020-12-29 14:00:00' 
+- testing selanjutnya jalankan `date -s '2020-12-29 14:00:00'` 
 
 - kemudian `ping 10.151.73.50` pada UML GRESIK untuk melakukan testing.
 
@@ -324,9 +324,10 @@ iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 07:01 --timestop 16:59 -
 - terlihat bahwa UML tidak dapat diakses
 
 Karena kita memiliki 2 buah WEB Server, 
+
 ### (6) Bibah ingin SURABAYA disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada PROBOLINGGO port 80 dan MADIUN port 80.
 
-- Lakukan perintah `nano soal6.sh` pada UML Surabaya yang berisikan
+- Lakukan perintah `nano soal6.sh` pada UML SURABAYA yang berisikan
 
 ```
 iptables -t nat -A PREROUTING -p tcp -d 10.151.73.50 -m statistic --mode nth --every 2 --packet 0 -j DNAT --to-destination 192.168.0.11:80
@@ -336,18 +337,19 @@ iptables -t nat -A POSTROUTING -p tcp -d 192.168.0.10 --dport 80 -j SNAT --to-so
 ```
 
 - Lakukan perintah `bash soal6.sh`
+
 ![messageImage_1609241447742](https://user-images.githubusercontent.com/56763600/103282123-acdc0f80-4a0f-11eb-90cd-05d41907cf72.jpg)
 
-- Di UML Madiun lakukan perintah `nc -l -p 80` dan `nc 10.151.73.50 80` pada UML Gresik, ketikkan kata-kata apapun
+- Di UML MADIUN lakukan perintah `nc -l -p 80` dan `nc 10.151.73.50 80` pada UML GRESIK, ketikkan kata-kata apapun
 ![Screen Shot 2020-12-29 at 19 29 25](https://user-images.githubusercontent.com/56763600/103282135-bbc2c200-4a0f-11eb-8fdc-41f194641c1e.png)
 
-- Di UML Probolinggo lakukan perintah `nc -l -p 80` dan `nc 10.151.73.50 80` pada UML Gresik, ketikkan kata-kata apapun
+- Di UML PROBOLINGGO lakukan perintah `nc -l -p 80` dan `nc 10.151.73.50 80` pada UML GRESIK, ketikkan kata-kata apapun
 ![Screen Shot 2020-12-29 at 19 29 57](https://user-images.githubusercontent.com/56763600/103282138-be251c00-4a0f-11eb-80bf-2ffe9922dbfc.png)
 
 
 ### (7) Bibah ingin agar semua paket didrop oleh firewall (dalam topologi) tercatat dalam log pada setiap UML yang memiliki aturan drop.
 
-- Lakukan perintah `nano soal7.sh` pada UML Malang, Mojokerto, Surabaya yang berisikan
+- Lakukan perintah `nano soal7.sh` pada UML MALANG, MOJOKERTO, SURABAYA yang berisikan
 
 ```
 iptables -N LOGGING
