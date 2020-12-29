@@ -210,6 +210,9 @@ auto eth0
 iface eth0 inet dhcp
 ```
 
+![Screen Shot 2020-12-29 at 19 45 31](https://user-images.githubusercontent.com/56763600/103281740-9d0ffb80-4a0e-11eb-8e24-326dfd13191a.png)
+![Screen Shot 2020-12-29 at 19 45 54](https://user-images.githubusercontent.com/56763600/103281741-9e412880-4a0e-11eb-9b13-23f2825e5470.png)
+
 - Restart network dengan mengetikkan `service networking restart` pada setiap UML
 
 ### (1) Agar topologi yang kalian buat dapat mengakses keluar, kalian diminta untuk mengkonfigurasi SURABAYA menggunakan iptables, namun Bibah tidak ingin kalian menggunakan MASQUERADE.
