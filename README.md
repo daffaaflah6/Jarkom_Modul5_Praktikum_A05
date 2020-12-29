@@ -241,14 +241,17 @@ iptables -A FORWARD -p tcp --dport 22 -d 10.151.73.48/29 -i eth0 -j DROP
 
 ![2-sh](https://user-images.githubusercontent.com/52326074/103270125-ed289700-49e9-11eb-9bf0-5596ce776b1a.png)
 
-- bash soal2.sh kemudian `nc 10.151.73.50 22` pada UML SURABAYA, ketikkan apapun
+- `bash soal2.sh`
 
-![2-1-sh](https://user-images.githubusercontent.com/52326074/103270128-ed289700-49e9-11eb-9b84-837848418357.png)
+![Screen Shot 2020-12-29 at 20 16 42](https://user-images.githubusercontent.com/56763600/103283317-35a87a80-4a13-11eb-9c0d-dd7db5f3da45.png)
 
 - install netcat pada UML MALANG
-- `nc -l -p 22` pada UML MALANG
+
+- `nc -l -p 22` pada UML MALANG kemudian `nc 10.151.73.50 22` pada putty, ketikkan apapun
 
 ![2-testing](https://user-images.githubusercontent.com/52326074/103270170-f580d200-49e9-11eb-9dc7-6c2bfb330ce7.jpg)
+
+- pesan di UML malang tidak tertampilkan
 
 ### (3) Karena tim kalian maksimal terdiri dari 3 orang, Bibah meminta kalian untuk membatasi DHCP dan DNS server hanya boleh menerima maksimal 3 koneksi ICMP secara bersamaan yang berasal dari mana saja menggunakan iptables pada masing masing server, selebihnya akan di DROP.
 
@@ -265,7 +268,7 @@ iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j
 
 ![3-2-sh](https://user-images.githubusercontent.com/52326074/103270140-ef8af100-49e9-11eb-96fd-b07a803c241c.jpg)
 
-- kemudian `ping 10.15.73.50`
+- kemudian `ping 10.15.73.50`, terlihat apabila di-ping di lebih dari 3 UML maka pada UML berikut-berikutnya ping tidak bekerja
 
 ![3-testing](https://user-images.githubusercontent.com/52326074/103270159-f285e180-49e9-11eb-8376-bca216609d47.png)
 
@@ -296,10 +299,19 @@ iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 07:01 --timestop 16:59 -
 ```
 
 - `bash soal5.sh` pada UML MALANG
-- jalankan `date -s '2020-12-29 20:00:00'`
-- kemudian `ping 10.151.73.50` pada UML GRESIK
+- jalankan `date -s '2020-12-29 20:00:00' 
+
+- kemudian `ping 10.151.73.50` pada UML GRESIK untuk melakukan testing.
+
+- maka terlihat bahwa UML dapat diakses
+
+- testing selanjutnya jalankan `date -s '2020-12-29 14:00:00' 
+
+- kemudian `ping 10.151.73.50` pada UML GRESIK untuk melakukan testing.
 
 ![5-testing](https://user-images.githubusercontent.com/52326074/103270154-f1ed4b00-49e9-11eb-9444-f972813961d7.jpg)
+
+- terlihat bahwa UML tidak dapat diakses
 
 Karena kita memiliki 2 buah WEB Server, 
 ### (6) Bibah ingin SURABAYA disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada PROBOLINGGO port 80 dan MADIUN port 80.
