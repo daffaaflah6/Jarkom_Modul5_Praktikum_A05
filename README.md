@@ -304,6 +304,15 @@ iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 07:01 --timestop 16:59 -
 Karena kita memiliki 2 buah WEB Server, 
 ### (6) Bibah ingin SURABAYA disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada PROBOLINGGO port 80 dan MADIUN port 80.
 
+![messageImage_1609241447742](https://user-images.githubusercontent.com/56763600/103282123-acdc0f80-4a0f-11eb-90cd-05d41907cf72.jpg)
+![Screen Shot 2020-12-29 at 19 29 25](https://user-images.githubusercontent.com/56763600/103282135-bbc2c200-4a0f-11eb-8fdc-41f194641c1e.png)
+![Screen Shot 2020-12-29 at 19 29 57](https://user-images.githubusercontent.com/56763600/103282138-be251c00-4a0f-11eb-80bf-2ffe9922dbfc.png)
+
+
 ### (7) Bibah ingin agar semua paket didrop oleh firewall (dalam topologi) tercatat dalam log pada setiap UML yang memiliki aturan drop.
+
+![messageImage_1609206393916](https://user-images.githubusercontent.com/56763600/103282153-c7ae8400-4a0f-11eb-8916-7fbbd7025e60.jpg)
+![no 7](https://user-images.githubusercontent.com/56763600/103282188-ee6cba80-4a0f-11eb-9050-183839918947.png)
+![messageImage_1609241990197](https://user-images.githubusercontent.com/56763600/103282195-f6c4f580-4a0f-11eb-88a7-3c32f3ec8383.jpg)
 
 # TERIMA KASIH :)
