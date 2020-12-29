@@ -141,7 +141,7 @@ Kemudian pada UML `MOJOKERTO` dilakukan perintah berikut :
 
 ![instal-dhcp-server-mojo](https://user-images.githubusercontent.com/52326074/103268642-61613b80-49e6-11eb-9cad-a80f9b9122e2.jpg)
 
-- Lau  edit f ile `nano /etc/default/isc-dhcp-server`
+- Lau  edit file `nano /etc/default/isc-dhcp-server`
 ```
 INTERFACES="eth0"
 ```
@@ -285,10 +285,18 @@ iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 07:00 --timestop 17:00 -
 ![4-sh](https://user-images.githubusercontent.com/52326074/103270142-ef8af100-49e9-11eb-9a19-27f7ba10efc4.jpg)
 
 - `bash soal4.sh` pada UML MALANG
-- jalankan `date -s '2020-12-29 20:00:00'`
+
+- jalankan `date -s '2020-12-29 20:00:00`
+
 - kemudian `ping 10.15.73.50` pada UML SIDOARJO
 
 ![4-testing](https://user-images.githubusercontent.com/52326074/103270145-f0238780-49e9-11eb-98af-6b21d6c4b9ce.jpg)
+
+- Untuk testing yang kedua, jalankan `date -s '2020-12-29 09:00:00`
+
+- kemudian `ping 10.15.73.50` pada UML SIDOARJO
+
+![no4](https://user-images.githubusercontent.com/56763600/103284049-23c7d700-4a15-11eb-94d1-eda4d33c6299.jpg)
 
 ### ● (5) Akses dari subnet GRESIK hanya diperbolehkan pada pukul 17.00 hingga pukul 07.00 setiap harinya.
 Selain itu paket akan di REJECT.
@@ -299,10 +307,16 @@ iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 07:01 --timestop 16:59 -
 ```
 
 - `bash soal5.sh` pada UML MALANG
-- jalankan `date -s '2020-12-29 20:00:00'`
+- jalankan `date -s '2020-12-29 20:00:00' 
+
 - kemudian `ping 10.151.73.50` pada UML GRESIK untuk melakukan testing.
+
+![no 5](https://user-images.githubusercontent.com/56763600/103283676-2d9d0a80-4a14-11eb-8733-692a0854ef6a.jpg)
+
 - maka terlihat bahwa UML dapat diakses
-- testing selanjutnya jalankan `date -s '2020-12-29 14:00:00'`
+
+- testing selanjutnya jalankan `date -s '2020-12-29 14:00:00' 
+
 - kemudian `ping 10.151.73.50` pada UML GRESIK untuk melakukan testing.
 
 ![5-testing](https://user-images.githubusercontent.com/52326074/103270154-f1ed4b00-49e9-11eb-9444-f972813961d7.jpg)
@@ -325,12 +339,11 @@ iptables -t nat -A POSTROUTING -p tcp -d 192.168.0.10 --dport 80 -j SNAT --to-so
 ![messageImage_1609241447742](https://user-images.githubusercontent.com/56763600/103282123-acdc0f80-4a0f-11eb-90cd-05d41907cf72.jpg)
 
 - Di UML Madiun lakukan perintah `nc -l -p 80` dan `nc 10.151.73.50 80` pada UML Gresik, ketikkan kata-kata apapun
-
 ![Screen Shot 2020-12-29 at 19 29 25](https://user-images.githubusercontent.com/56763600/103282135-bbc2c200-4a0f-11eb-8fdc-41f194641c1e.png)
 
 - Di UML Probolinggo lakukan perintah `nc -l -p 80` dan `nc 10.151.73.50 80` pada UML Gresik, ketikkan kata-kata apapun
-
 ![Screen Shot 2020-12-29 at 19 29 57](https://user-images.githubusercontent.com/56763600/103282138-be251c00-4a0f-11eb-80bf-2ffe9922dbfc.png)
+
 
 ### (7) Bibah ingin agar semua paket didrop oleh firewall (dalam topologi) tercatat dalam log pada setiap UML yang memiliki aturan drop.
 
@@ -345,13 +358,12 @@ iptables -A LOGGING -j DROP
 
 ![messageImage_1609206393916](https://user-images.githubusercontent.com/56763600/103282153-c7ae8400-4a0f-11eb-8916-7fbbd7025e60.jpg)
 
-- Lakukan `bash soal7.sh`
-- Mengacu pada soal 2
+- Lakukan `bash soal7.sh` 
 
+- Mengacu pada soal 2
 ![no 7](https://user-images.githubusercontent.com/56763600/103282188-ee6cba80-4a0f-11eb-9050-183839918947.png)
 
 - Mengacu pada soal 3 dan melakukan `ping 10.151.72.26`
-
 ![messageImage_1609241990197](https://user-images.githubusercontent.com/56763600/103282195-f6c4f580-4a0f-11eb-88a7-3c32f3ec8383.jpg)
 
 # TERIMA KASIH :)
