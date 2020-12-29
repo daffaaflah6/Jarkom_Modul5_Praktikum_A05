@@ -138,10 +138,15 @@ Kemudian pada UML `MOJOKERTO` dilakukan perintah berikut :
 
 - Menjalankan perintah `apt-get update`
 - Kemudian jalankan perintah `apt-get install isc-dhcp-server`
+
+![instal-dhcp-server-mojo](https://user-images.githubusercontent.com/52326074/103268642-61613b80-49e6-11eb-9cad-a80f9b9122e2.jpg)
+
 - Lau  edit f ile `nano /etc/default/isc-dhcp-server`
 ```
 INTERFACES="eth0"
 ```
+
+![iface-eth0-mojo](https://user-images.githubusercontent.com/52326074/103268643-61f9d200-49e6-11eb-8da8-b8cb594663c4.jpg)
 
 - Selanjutnya melakukan konfigurasi DHCP Server dengan menjalankan perintah `nano /etc/dhcp/dhcpd.conf` yang didalamnya ditambahi sebagai berikut
 ```
@@ -177,10 +182,23 @@ Kemudian pada UML `SURABAYA`, `BATU`, `KEDIRI` dilakukan perintah berikut :
 
 - Menjalankan perintah `apt-get update`
 - Kemudian jalankan perintah `apt-get install isc-dhcp-relay`
+
+![instal-dhcp-relay-sby](https://user-images.githubusercontent.com/52326074/103268645-62926880-49e6-11eb-8f5c-5b7dcff3afbf.png)
+
+![instal-dhcp-relay-batu](https://user-images.githubusercontent.com/52326074/103268646-632aff00-49e6-11eb-80f3-c139b3ad4a06.jpg)
+
+![instal-dhcp-relay-kdr](https://user-images.githubusercontent.com/52326074/103268634-5e664b00-49e6-11eb-9a58-dfc480bd8696.jpg)
+
 - Lau  edit f ile `nano /etc/default/isc-dhcp-relay`
 ```
 SERVERS="10.151.73.51"
 ```
+
+![relay-sby](https://user-images.githubusercontent.com/52326074/103268637-60300e80-49e6-11eb-9136-333de531f8e3.jpg)
+
+![relay-kdr](https://user-images.githubusercontent.com/52326074/103268638-60c8a500-49e6-11eb-9b3c-fd1baa207ac4.jpg)
+
+![relay-batu](https://user-images.githubusercontent.com/52326074/103268640-61613b80-49e6-11eb-9884-721d60c78258.jpg)
 
 - Kemudian restart dengan menjalankan perintah `service isc-dhcp-relay restart`
 
