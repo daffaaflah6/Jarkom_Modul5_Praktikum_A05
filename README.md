@@ -241,7 +241,7 @@ iptables -A FORWARD -p tcp --dport 22 -d 10.151.73.48/29 -i eth0 -j DROP
 
 ![2-sh](https://user-images.githubusercontent.com/52326074/103270125-ed289700-49e9-11eb-9bf0-5596ce776b1a.png)
 
-- bash soal2.sh kemudian `nc 10.151.73.50 22` pada UML SURABAYA
+- bash soal2.sh kemudian `nc 10.151.73.50 22` pada UML SURABAYA, ketikkan apapun
 
 ![2-1-sh](https://user-images.githubusercontent.com/52326074/103270128-ed289700-49e9-11eb-9b84-837848418357.png)
 
@@ -252,14 +252,14 @@ iptables -A FORWARD -p tcp --dport 22 -d 10.151.73.48/29 -i eth0 -j DROP
 
 ### (3) Karena tim kalian maksimal terdiri dari 3 orang, Bibah meminta kalian untuk membatasi DHCP dan DNS server hanya boleh menerima maksimal 3 koneksi ICMP secara bersamaan yang berasal dari mana saja menggunakan iptables pada masing masing server, selebihnya akan di DROP.
 
-- nano soal3.sh di UML MALANG & MOJOKERTO
+- `nano soal3.sh` di UML MALANG & MOJOKERTO
 ```
 iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
 ```
 
 ![3-sh-mlgmojo](https://user-images.githubusercontent.com/52326074/103270134-ee59c400-49e9-11eb-96bd-8f479e2555f3.png)
 
-- bash soal3.sh pada UML MALANG & MOJOKERTO
+- `bash soal3.sh` pada UML MALANG & MOJOKERTO
 
 ![3-1-sh](https://user-images.githubusercontent.com/52326074/103270136-eef25a80-49e9-11eb-9cd1-21f3796dda57.jpg)
 
@@ -272,7 +272,7 @@ iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j
 kemudian kalian diminta untuk membatasi akses ke MALANG yang berasal dari SUBNET SIDOARJO dan SUBNET GRESIK dengan peraturan sebagai berikut:
 ### ● (4) Akses dari subnet SIDOARJO hanya diperbolehkan pada pukul 07.00 - 17.00 pada hari Senin sampai Jumat.
 
-- nano soal4.sh di UML MALANG
+- `nano soal4.sh` di UML MALANG
 ```
 iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 07:00 --timestop 17:00 --weekdays Mon,Tue,Wed,Thu,Fri -j ACCEPT
 iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 17:01 --timestop 06:59 -j REJECT
@@ -281,7 +281,7 @@ iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 07:00 --timestop 17:00 -
 
 ![4-sh](https://user-images.githubusercontent.com/52326074/103270142-ef8af100-49e9-11eb-9a19-27f7ba10efc4.jpg)
 
-- bash soal4.sh pada UML MALANG
+- `bash soal4.sh` pada UML MALANG
 - jalankan `date -s '2020-12-29 20:00:00'`
 - kemudian `ping 10.15.73.50` pada UML SIDOARJO
 
@@ -290,29 +290,58 @@ iptables -A INPUT -s 192.168.1.0/24 -m time --timestart 07:00 --timestop 17:00 -
 ### ● (5) Akses dari subnet GRESIK hanya diperbolehkan pada pukul 17.00 hingga pukul 07.00 setiap harinya.
 Selain itu paket akan di REJECT.
 
-- nano soal5.sh pada UML MALANG
+- `nano soal5.sh` pada UML MALANG
 ```
 iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 07:01 --timestop 16:59 -j REJECT
 ```
 
-- bash soal5.sh pada UML MALANG
+- `bash soal5.sh` pada UML MALANG
 - jalankan `date -s '2020-12-29 20:00:00'`
-- kemudian `ping 10.15.73.50` pada UML GRESIK
+- kemudian `ping 10.151.73.50` pada UML GRESIK
 
 ![5-testing](https://user-images.githubusercontent.com/52326074/103270154-f1ed4b00-49e9-11eb-9444-f972813961d7.jpg)
 
 Karena kita memiliki 2 buah WEB Server, 
 ### (6) Bibah ingin SURABAYA disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada PROBOLINGGO port 80 dan MADIUN port 80.
 
+- Lakukan perintah `nano soal6.sh` pada UML Surabaya yang berisikan
+
+```
+iptables -t nat -A PREROUTING -p tcp -d 10.151.73.50 -m statistic --mode nth --every 2 --packet 0 -j DNAT --to-destination 192.168.0.11:80
+iptables -t nat -A PREROUTING -p tcp -d 10.151.73.50 -j DNAT --to-destination 192.168.0.10:80
+iptables -t nat -A POSTROUTING -p tcp -d 192.168.0.11 --dport 80 -j SNAT --to-source 10.151.73.50
+iptables -t nat -A POSTROUTING -p tcp -d 192.168.0.10 --dport 80 -j SNAT --to-source 10.151.73.50
+```
+
+- Lakukan perintah `bash soal6.sh`
 ![messageImage_1609241447742](https://user-images.githubusercontent.com/56763600/103282123-acdc0f80-4a0f-11eb-90cd-05d41907cf72.jpg)
+
+- Di UML Madiun lakukan perintah `nc -l -p 80` dan `nc 10.151.73.50 80` pada UML Gresik, ketikkan kata-kata apapun
 ![Screen Shot 2020-12-29 at 19 29 25](https://user-images.githubusercontent.com/56763600/103282135-bbc2c200-4a0f-11eb-8fdc-41f194641c1e.png)
+
+- Di UML Probolinggo lakukan perintah `nc -l -p 80` dan `nc 10.151.73.50 80` pada UML Gresik, ketikkan kata-kata apapun
 ![Screen Shot 2020-12-29 at 19 29 57](https://user-images.githubusercontent.com/56763600/103282138-be251c00-4a0f-11eb-80bf-2ffe9922dbfc.png)
 
 
 ### (7) Bibah ingin agar semua paket didrop oleh firewall (dalam topologi) tercatat dalam log pada setiap UML yang memiliki aturan drop.
 
+- Lakukan perintah `nano soal7.sh` pada UML Malang, Mojokerto, Surabaya yang berisikan
+
+```
+iptables -N LOGGING
+iptables -A FORWARD -j LOGGING
+iptables -A LOGGING -m limit --limit 2/min -j LOG --log-prefix "IPTables-Dropped: " --log-level 4
+iptables -A LOGGING -j DROP
+```
+
 ![messageImage_1609206393916](https://user-images.githubusercontent.com/56763600/103282153-c7ae8400-4a0f-11eb-8916-7fbbd7025e60.jpg)
+
+- Lakukan `bash soal7.sh` 
+
+- Mengacu pada soal 2
 ![no 7](https://user-images.githubusercontent.com/56763600/103282188-ee6cba80-4a0f-11eb-9050-183839918947.png)
+
+- Mengacu pada soal 3 dan melakukan `ping 10.151.72.26`
 ![messageImage_1609241990197](https://user-images.githubusercontent.com/56763600/103282195-f6c4f580-4a0f-11eb-88a7-3c32f3ec8383.jpg)
 
 # TERIMA KASIH :)
